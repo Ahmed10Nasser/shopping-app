@@ -10,6 +10,6 @@ const store=createStore(reducers, compose(applyMiddleware(sagaMiddleware), windo
 
 sagaMiddleware.run(rootSaga);
 
-// store.dispatch(getProducts());
+store.dispatch(getProducts());
 
 export default store;
