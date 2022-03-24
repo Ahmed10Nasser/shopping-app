@@ -12,6 +12,8 @@ const Home = () => {
   const isLoading=useSelector(store=>store.products.isLoading);
   const error=useSelector(store=>store.products.error);
   const uid=useSelector(store=>store.user.userId);
+  const count=useSelector(store=>store.cart.count);
+  const totalPrice=useSelector(store=>store.cart.totalPrice);
   const dispatch=useDispatch();
   const navigate=useNavigate();
 
@@ -71,6 +73,9 @@ const Home = () => {
 
       <Link to="/cart">Cart</Link>
 
+      <div>Total Price: {totalPrice}</div>
+      <div>Count: {count}</div>
+
       <Filter 
         categoryRef={categoryRef} 
         mxPriceRef={mxPriceRef}
@@ -80,19 +85,20 @@ const Home = () => {
 
       {!isLoading && !error &&
         filteredProducts.map((product) =>(
-          <Card style={{ width: '20rem'}} key={product.id} className="m-3 mh-">
-            <Card.Img variant="top" src={product.image} alt={product.title} className="img-fluid p-3" style={{ maxHeight: '18rem'}}/>
-            <Card.Body>
-              <Card.Title>{product.title}</Card.Title>
-              <Card.Text>
-              {parseInt(product.price)+'\n\n'}{product.category}
-              </Card.Text>
-              <Button variant="primary"
-                onClick={()=>dispatch(addToCart(product))}
-              >Add to Cart</Button>
-            </Card.Body>
-          </Card>
-
+            <Card style={{ width: '20rem'}}  className="m-3 mh-" key={product.id}>
+              <Link  to={`/product/${product.id}`}>
+                <Card.Img variant="top" src={product.image} alt={product.title} className="img-fluid p-3" style={{ maxHeight: '18rem'}}/>
+              </Link>
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>
+                {parseInt(product.price)+'\n\n'}{product.category}
+                </Card.Text>
+                <Button variant="primary"
+                  onClick={()=>dispatch(addToCart(product))}
+                >Add to Cart</Button>
+              </Card.Body>
+            </Card>
         ))
       }
     </div>

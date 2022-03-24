@@ -7,6 +7,7 @@ import {Link, useNavigate} from "react-router-dom"
 const Cart = () => {
 
   const totalPrice=useSelector(store=>store.cart.totalPrice);
+  const count=useSelector(store=>store.cart.count);
   const productsInCart=useSelector(store=>store.cart.products);
   const uid=useSelector(store=>store.user.userId);
   const dispatch=useDispatch();
@@ -23,6 +24,9 @@ const Cart = () => {
     <Container>
         <div className="alert alert-primary" role="alert">
          {totalPrice}
+        </div>
+        <div className="alert alert-primary" role="alert">
+         {count}
         </div>
         <Link to="/">Home</Link>
         <Button variant="danger"

@@ -4,6 +4,7 @@ import { ADD_TO_CART, ADJUST_QUANTITY, CLEAR_CART, REMOVE_FROM_CART } from "../a
 
 const defaultCart={
   totalPrice:0,
+  count:0,
   products:[] // {productId, quantity}
 }
 
@@ -23,6 +24,7 @@ export default function cartReducer(cart=defaultCart, action){
           newCart.products[index].quantity+=1;
           newCart.totalPrice+=parseInt(newCart.products[index].price);
         }
+        newCart.count++;
       });
 
     case REMOVE_FROM_CART:
@@ -31,25 +33,32 @@ export default function cartReducer(cart=defaultCart, action){
           product.id === action.payload.productId
         );
         if(index!==-1){
+          newCart.count-=newCart.products[index].quantity;
           newCart.totalPrice-=(newCart.products[index].quantity * parseInt(newCart.products[index].price));
           newCart.products.splice(index,1);
         }
       });
     
     case ADJUST_QUANTITY:
+      if(!action.payload.newQuantity){
+        return cart;
+      }
       return produce(cart, newCart=>{
         const index=newCart.products.findIndex((product)=>
           product.id === action.payload.productId
         );
         if(index!==-1){
+          newCart.count-=newCart.products[index].quantity;
           newCart.totalPrice-=(newCart.products[index].quantity * parseInt(newCart.products[index].price))
           newCart.products[index].quantity=action.payload.newQuantity;
+          newCart.count+=newCart.products[index].quantity;
           newCart.totalPrice+=(newCart.products[index].quantity * parseInt(newCart.products[index].price))
         }
       });
     case CLEAR_CART:
       return produce(cart, newCart=>{
         newCart.totalPrice=0;
+        newCart.count=0;
         newCart.products=[];
       });
     default:

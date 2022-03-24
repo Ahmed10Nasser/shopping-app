@@ -4,6 +4,7 @@ import Signup from "./Signup";
 import Login from "./Login";
 import {Container} from "react-bootstrap"
 import Cart from "./Cart";
+import ProductPreview from "./ProductPreview";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/signup" element={<Signup/>} />
           <Route exact path="/login" element={<Login/>} />
           <Route exact path="/cart" element={<Cart/>} />
+          <Route exact path="/product/:id" element={<ProductPreview/>} />
         </Routes>
       </Router>
     </Container>
