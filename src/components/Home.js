@@ -1,18 +1,43 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import  {Button, Alert, Card} from "react-bootstrap"
 import { logout } from '../redux/actions/auth';
 import { useNavigate,Link } from 'react-router-dom';
 import { addToCart } from '../redux/actions/cart';
+import Filter from './Filter';
 
 
-const Test = () => {
+const Home = () => {
   const products=useSelector(store=>store.products.values);
   const isLoading=useSelector(store=>store.products.isLoading);
   const error=useSelector(store=>store.products.error);
   const uid=useSelector(store=>store.user.userId);
   const dispatch=useDispatch();
   const navigate=useNavigate();
+
+
+  const [filteredProducts, setFilteredProducts]=useState(products);
+  const categoryRef=useRef("");
+  const mxPriceRef=useRef("");
+  const mnRatingRef=useRef("");
+
+
+
+  
+  function filter(){
+    const category=categoryRef.current.value;
+    const mxPrice=mxPriceRef.current.value;
+    const mnRating=mnRatingRef.current.value;
+
+    const temp=[];
+    for(const product of products){
+      if((category=="" || category==product.category)  && (mxPrice=="" || product.price<=mxPrice)  && (mnRating=="" || product.rating.rate>=mnRating)){
+        temp.push(product);
+      }
+    }
+    setFilteredProducts(temp);
+  }
+
 
   useEffect(()=>{
     if(!uid){
@@ -23,18 +48,11 @@ const Test = () => {
   const errorLout=useSelector(store=>store.user.error);
   const isLoadingLout=useSelector(store=>store.user.isLoading);
 
-
-
-  function handleClick(e){
-    e.preventDefault();
-    dispatch(logout());
-  }
-
   return (
     <div className="container row">
       {errorLout && <Alert variant="danger">{errorLout}</Alert>}
       <Button disabled={isLoadingLout} className="w-100  mt-3"
-        onClick={handleClick}
+        onClick={()=>dispatch(logout())}
       >
         Log out
       </Button>
@@ -50,10 +68,18 @@ const Test = () => {
         </div>
       
       }
-      <Link to="/cart">Cart</Link>
-      {!isLoading && !error &&
-        products.map((product) =>(
 
+      <Link to="/cart">Cart</Link>
+
+      <Filter 
+        categoryRef={categoryRef} 
+        mxPriceRef={mxPriceRef}
+        mnRatingRef={mnRatingRef}
+        filter={filter}
+      ></Filter>
+
+      {!isLoading && !error &&
+        filteredProducts.map((product) =>(
           <Card style={{ width: '20rem'}} key={product.id} className="m-3 mh-">
             <Card.Img variant="top" src={product.image} alt={product.title} className="img-fluid p-3" style={{ maxHeight: '18rem'}}/>
             <Card.Body>
@@ -67,18 +93,10 @@ const Test = () => {
             </Card.Body>
           </Card>
 
-
-
-        // <ul className="list-group col-sm" key={product.id}>
-        //     <li className="list-group-item">{product.title}</li>
-        //     <li className="list-group-item">{product.price}</li>
-        //     <li className="list-group-item">{product.category}</li>
-        //     <li className="list-group-item container"><img src={product.image} alt="" className="img-fluid" /></li>
-        // </ul>
         ))
       }
     </div>
-);
+  );
 }
  
-export default Test;
+export default Home;

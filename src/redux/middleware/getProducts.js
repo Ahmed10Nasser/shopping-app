@@ -6,7 +6,7 @@ function* getProductsSaga(){
   yield put(setLoading(true));
   yield put(setError(""));
   try{
-    const res= yield axios.get('https://fakestoreapi.com/products?limit=5');
+    const res= yield axios.get('https://fakestoreapi.com/products?limit=10');
     yield put(setProducts(res.data));
   }
   catch(err){

@@ -1,4 +1,4 @@
-import Test from "./Test";
+import Home from "./Home";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Signup from "./Signup";
 import Login from "./Login";
@@ -11,7 +11,7 @@ function App() {
     <Container>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Test/>} />
+          <Route exact path="/" element={<Home/>} />
           <Route exact path="/signup" element={<Signup/>} />
           <Route exact path="/login" element={<Login/>} />
           <Route exact path="/cart" element={<Cart/>} />
