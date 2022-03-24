@@ -11,7 +11,7 @@ const NavBar = () => {
   const dispatch=useDispatch();
 
   return (
-    <Navbar collapseOnSelect expand="lg"  className="navbar-light bg-light">
+    <Navbar collapseOnSelect expand="lg"  className="navbar-light bg-light" sticky="top">
       <Container  className="align-middle ">
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-center">

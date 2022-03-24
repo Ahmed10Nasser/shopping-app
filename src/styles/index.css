@@ -16,7 +16,8 @@ code {
   display: inline-flex;
   height: 40px;
   width: 40px;
-  border: 2px solid ;
+  border: 2px solid;
+  color: #df4759;
   border-radius: 50%;
   font-size: 25px;
   justify-content: center;
