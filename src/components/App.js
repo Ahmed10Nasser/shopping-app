@@ -1,4 +1,5 @@
 import Home from "./Home";
+import NavBar from "./NavBar";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Signup from "./Signup";
 import Login from "./Login";
@@ -9,8 +10,9 @@ import ProductPreview from "./ProductPreview";
 
 function App() {
   return (
-    <Container>
-      <Router>
+    <Router>
+      <NavBar></NavBar>
+      <Container>
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route exact path="/signup" element={<Signup/>} />
@@ -18,8 +20,8 @@ function App() {
           <Route exact path="/cart" element={<Cart/>} />
           <Route exact path="/product/:id" element={<ProductPreview/>} />
         </Routes>
-      </Router>
-    </Container>
+      </Container>
+    </Router>
   );
 }
 

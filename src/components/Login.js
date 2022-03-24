@@ -47,7 +47,7 @@ const Signup = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" ref={passwordRef} required />
               </Form.Group>
-              <Button disabled={isLoading} className="w-100  mt-3" type="submit">
+              <Button disabled={isLoading} className="w-100  mt-3 btn-secondary" type="submit">
                 Log in
               </Button>
             </Form>

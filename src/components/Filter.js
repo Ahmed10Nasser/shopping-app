@@ -11,10 +11,13 @@ const Filter = (props) => {
 
 
   return (
-    <Container>
-      <div className="filter-category">
-        Category Filter{" "}
-        <select
+    <Container className="my-3">
+
+      <div className="input-group my-3">
+        <div className="input-group-prepend">
+          <span className="input-group-text">Category</span>
+        </div>
+        <select className="form-control"
           ref={props.categoryRef}
           onChange={()=>props.filter()}
         >
@@ -26,15 +29,26 @@ const Filter = (props) => {
           }
         </select>
       </div>
-      <div className="filter-mxPrice">
-        Max Price Filter{" "}
-        <input type="number" name="mxPrice" ref={props.mxPriceRef} min="1"
+
+
+
+      <div className="input-group my-3">
+        <div className="input-group-prepend">
+          <span className="input-group-text">Maximum Price</span>
+        </div>
+        <input type="number" className="form-control" placeholder="No Filter"
+          name="mxPrice" ref={props.mxPriceRef} min="1"
           onChange={()=>props.filter()}
         />
       </div>
-      <div className="filter-mnRating">
-        Min Rating Filter{" "}
-        <input type="number" name="mnRating" ref={props.mnRatingRef} min="1" max="5"
+
+
+      <div className="input-group my-3">
+        <div className="input-group-prepend">
+          <span className="input-group-text">Minimum Rating</span>
+        </div>
+        <input type="number" className="form-control" placeholder="No Filter"
+          name="mnRating" ref={props.mnRatingRef} min="1" max="5"
           onChange={()=>props.filter()}
         />
       </div>

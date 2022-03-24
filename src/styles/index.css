@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cart_counter {
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  border: 2px solid ;
+  border-radius: 50%;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+}

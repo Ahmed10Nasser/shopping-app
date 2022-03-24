@@ -1,12 +1,21 @@
 import { Container,Card,Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useEffect} from 'react';
+import { useNavigate, useParams } from "react-router";
 import { addToCart } from "../redux/actions/cart";
 
 const ProductPreview = () => {
   const {id}=useParams();
   const product=useSelector(store=>store.products.values[id-1]);
+  const uid=useSelector(store=>store.user.userId);
   const dispatch=useDispatch();
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    if(!uid){
+      navigate("/login");
+    }
+  },[uid]);
 
   return (
     <Container>

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import  {Button, Alert, Card} from "react-bootstrap"
-import { logout } from '../redux/actions/auth';
+import  {Button, Alert, Card, Spinner, Container} from "react-bootstrap"
 import { useNavigate,Link } from 'react-router-dom';
 import { addToCart } from '../redux/actions/cart';
 import Filter from './Filter';
@@ -12,11 +11,9 @@ const Home = () => {
   const isLoading=useSelector(store=>store.products.isLoading);
   const error=useSelector(store=>store.products.error);
   const uid=useSelector(store=>store.user.userId);
-  const count=useSelector(store=>store.cart.count);
-  const totalPrice=useSelector(store=>store.cart.totalPrice);
+
   const dispatch=useDispatch();
   const navigate=useNavigate();
-
 
   const [filteredProducts, setFilteredProducts]=useState(products);
   const categoryRef=useRef("");
@@ -30,7 +27,6 @@ const Home = () => {
     const category=categoryRef.current.value;
     const mxPrice=mxPriceRef.current.value;
     const mnRating=mnRatingRef.current.value;
-
     const temp=[];
     for(const product of products){
       if((category=="" || category==product.category)  && (mxPrice=="" || product.price<=mxPrice)  && (mnRating=="" || product.rating.rate>=mnRating)){
@@ -47,34 +43,9 @@ const Home = () => {
     }
   },[uid]);
 
-  const errorLout=useSelector(store=>store.user.error);
-  const isLoadingLout=useSelector(store=>store.user.isLoading);
 
   return (
-    <div className="container row">
-      {errorLout && <Alert variant="danger">{errorLout}</Alert>}
-      <Button disabled={isLoadingLout} className="w-100  mt-3"
-        onClick={()=>dispatch(logout())}
-      >
-        Log out
-      </Button>
-
-      {isLoading && 
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      }
-      {error &&
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
-      
-      }
-
-      <Link to="/cart">Cart</Link>
-
-      <div>Total Price: {totalPrice}</div>
-      <div>Count: {count}</div>
+    <Container className="row">
 
       <Filter 
         categoryRef={categoryRef} 
@@ -82,6 +53,14 @@ const Home = () => {
         mnRatingRef={mnRatingRef}
         filter={filter}
       ></Filter>
+
+      {isLoading && 
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      }
+      {error && <Alert variant="danger my-2">{error}</Alert>}
+
 
       {!isLoading && !error &&
         filteredProducts.map((product) =>(
@@ -94,14 +73,14 @@ const Home = () => {
                 <Card.Text>
                 {parseInt(product.price)+'\n\n'}{product.category}
                 </Card.Text>
-                <Button variant="primary"
+                <Button variant="" className="btn btn-outline-secondary"
                   onClick={()=>dispatch(addToCart(product))}
                 >Add to Cart</Button>
               </Card.Body>
             </Card>
         ))
       }
-    </div>
+    </Container>
   );
 }
  
