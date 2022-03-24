@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { getProducts } from '../redux/actions/getProducts';
-import  {Button, Alert} from "react-bootstrap"
+import  {Button, Alert, Card} from "react-bootstrap"
 import { logout } from '../redux/actions/auth';
-import { useNavigate } from 'react-router';
+import { useNavigate,Link } from 'react-router-dom';
+import { addToCart } from '../redux/actions/cart';
 
 
 const Test = () => {
@@ -50,15 +50,31 @@ const Test = () => {
         </div>
       
       }
+      <Link to="/cart">Cart</Link>
       {!isLoading && !error &&
         products.map((product) =>(
-        <ul className="list-group col-sm" key={product.id}>
-            <li className="list-group-item">{product.title}</li>
-            <li className="list-group-item">{product.price}</li>
-            <li className="list-group-item">{product.category}</li>
-            <li className="list-group-item">{product.description}</li>
-            <li className="list-group-item container"><img src={product.image} alt="" className="img-fluid" /></li>
-        </ul>
+
+          <Card style={{ width: '20rem'}} key={product.id} className="m-3 mh-">
+            <Card.Img variant="top" src={product.image} alt={product.title} className="img-fluid p-3" style={{ maxHeight: '18rem'}}/>
+            <Card.Body>
+              <Card.Title>{product.title}</Card.Title>
+              <Card.Text>
+              {parseInt(product.price)+'\n\n'}{product.category}
+              </Card.Text>
+              <Button variant="primary"
+                onClick={()=>dispatch(addToCart(product))}
+              >Add to Cart</Button>
+            </Card.Body>
+          </Card>
+
+
+
+        // <ul className="list-group col-sm" key={product.id}>
+        //     <li className="list-group-item">{product.title}</li>
+        //     <li className="list-group-item">{product.price}</li>
+        //     <li className="list-group-item">{product.category}</li>
+        //     <li className="list-group-item container"><img src={product.image} alt="" className="img-fluid" /></li>
+        // </ul>
         ))
       }
     </div>

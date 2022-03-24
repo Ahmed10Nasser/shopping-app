@@ -1,9 +1,9 @@
-import { useEffect, useRef,useState } from "react";
+import { useEffect, useRef } from "react";
 import { Form, Button, Card, Alert,Container } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom"
-import { login, setSingedUp } from "../redux/actions/auth";
-import { setError, setLoading } from "../redux/actions/getProducts";
+import { login } from "../redux/actions/auth";
+import { clearCart } from "../redux/actions/cart";
 
 
 const Signup = () => {
@@ -17,6 +17,7 @@ const Signup = () => {
   const navigate=useNavigate();
 
   useEffect(()=>{
+    dispatch(clearCart());
     if(uid){
       navigate("/");
     }
