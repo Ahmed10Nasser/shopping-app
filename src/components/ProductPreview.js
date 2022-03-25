@@ -1,21 +1,12 @@
 import { Container} from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useEffect} from 'react';
-import { useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ProductCard from "./ProductCard";
 
 const ProductPreview = () => {
   const {id}=useParams();
   const product=useSelector(store=>store.products.values[id-1]);
-  const uid=useSelector(store=>store.user.userId);
-  const navigate=useNavigate();
-
-  useEffect(()=>{
-    if(!uid){
-      navigate("/login");
-    }
-  },[uid]);
-
+  
   return (
     <Container className="row align-items-center">
           <ProductCard product={product}></ProductCard>

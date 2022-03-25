@@ -20,13 +20,11 @@ const NavBar = () => {
             <Link className="nav-link h5" to="/">Home</Link>
          </li>
         </ul>
-        {uid &&
           <ul className="navbar-nav mx-3">
           <li className="nav-item">
             <Link className="nav-link h5" to="/cart">Cart <span className="cart_counter">{count}</span></Link>
             </li>
           </ul>
-        }
         <ul className="navbar-nav mx-3">
           <li className="nav-item active">
             {uid && <span className="nav-link h5"> {email} </span>}

@@ -1,10 +1,12 @@
 import { Card,Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import {Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {Link,useNavigate} from "react-router-dom";
 import { addToCart } from "../redux/actions/cart";
 
 const ProductCard = ({product}) => {
+  const uid=useSelector(store=>store.user.userId);
   const dispatch=useDispatch();
+  const navigate=useNavigate();
   return (
     <Card style={{ width: '20rem'}}  className="m-3 " key={product.id}>
       <Link  to={`/product/${product.id}`}>
@@ -19,7 +21,14 @@ const ProductCard = ({product}) => {
           <div className="row mt-3">
             <div className="col">
               <Button variant="" className="btn btn-outline-secondary"
-                onClick={()=>dispatch(addToCart(product))}
+                onClick={()=>{
+                  if(uid){
+                    dispatch(addToCart(product))
+                  }
+                  else{
+                    navigate("/login")
+                  }
+                }}
               >Add to Cart</Button>
             </div>
             <div className="h5 col" dir="rtl">{"$"}{parseInt(product.price)}</div>

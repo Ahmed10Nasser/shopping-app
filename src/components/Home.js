@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {useSelector} from 'react-redux';
 import  {Alert, Spinner, Container} from "react-bootstrap"
-import { useNavigate } from 'react-router-dom';
 import Filter from './Filter';
 import ProductCard from './ProductCard';
 
@@ -10,9 +9,6 @@ const Home = () => {
   const products=useSelector(store=>store.products.values);
   const isLoading=useSelector(store=>store.products.isLoading);
   const error=useSelector(store=>store.products.error);
-  const uid=useSelector(store=>store.user.userId);
-
-  const navigate=useNavigate();
 
   const [filteredProducts, setFilteredProducts]=useState(products);
   const categoryRef=useRef("");
@@ -37,10 +33,8 @@ const Home = () => {
 
 
   useEffect(()=>{
-    if(!uid){
-      navigate("/login");
-    }
-  },[uid]);
+    setFilteredProducts(products);
+  },[products]);
 
 
   return (
